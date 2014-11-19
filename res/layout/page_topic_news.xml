@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
+    android:background="@color/white"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -15,9 +16,9 @@
             android:src="@drawable/ic_drawer" />
     </RelativeLayout>
 
-    <com.piscen.huakai.view.ScrollViewExtend
+     <com.piscen.huakai.view.ScrollViewExtend
         android:layout_width="match_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent" > 
 
         <LinearLayout
             android:id="@+id/linearlayout_news_main"
@@ -41,7 +42,7 @@
                     <android.support.v4.view.ViewPager
                         android:id="@+id/image_slide_page"
                         android:layout_width="fill_parent"
-                        android:layout_height="180dip"
+                        android:layout_height="300dip"
                         android:focusable="true" />
 
                     <RelativeLayout
@@ -80,12 +81,13 @@
                                 android:textSize="13dip" />
                         </LinearLayout>
                     </RelativeLayout>
+
                 </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
                 <LinearLayout
@@ -114,7 +116,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <GridView
+            <com.piscen.huakai.view.MyGridView
                 android:id="@+id/main_gridview"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
@@ -122,9 +124,8 @@
                 android:horizontalSpacing="10dp"
                 android:numColumns="2"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="10dp" >
-            </GridView>
+                android:verticalSpacing="10dp" />
         </LinearLayout>
-    </com.piscen.huakai.view.ScrollViewExtend>
+    </com.piscen.huakai.view.ScrollViewExtend> 
 
 </LinearLayout>

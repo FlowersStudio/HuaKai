@@ -4,6 +4,7 @@ import com.piscen.huakai.R;
 import com.piscen.huakai.common.AsyncImageLoader;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ public class ArrayListFragment extends Fragment {
 	public  getInfo mCallBack;
 	private String num;
 	private String URL;
-	
+	private ProgressDialog progressDialog;
     //oncreate view
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +55,6 @@ public class ArrayListFragment extends Fragment {
 
 		}
 	}
-
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -71,7 +71,19 @@ public class ArrayListFragment extends Fragment {
 			mCallBack.GetInfoDate();
 		}
 	}
-	
+	protected void start() {
+		progressDialog = new ProgressDialog(getActivity().getApplicationContext());
+		progressDialog.setCanceledOnTouchOutside(false);
+		progressDialog.setTitle("提示");
+		progressDialog.setMessage("加载中，请稍候...");
+		progressDialog.show();
+	}
+
+	protected void succeed() {
+		if (progressDialog != null && progressDialog.isShowing()) {
+			progressDialog.dismiss();
+		}
+	}
 	
 	 /**
      * 设置
@@ -85,7 +97,7 @@ public class ArrayListFragment extends Fragment {
         loader.setCachedDir(getActivity().getCacheDir().getAbsolutePath()); 
       
         System.out.println("111 address=="+ getActivity().getCacheDir().getAbsolutePath() );
-        
+//        start();
         //开始加载图片
         loader.downloadImage(backImageUrl, true/*false*/, new AsyncImageLoader.ImageCallback() {  
 			@Override  
@@ -93,7 +105,7 @@ public class ArrayListFragment extends Fragment {
                 
             	if(bitmap != null){
                 	image.setBackgroundDrawable(new BitmapDrawable(bitmap));
-                    
+//                    succeed();
                 }else{  
                     //下载失败，设置默认图片  
                 	Log.e("imageFild", "imageFild");
@@ -101,19 +113,5 @@ public class ArrayListFragment extends Fragment {
             }  
         });  
 	}
-	
-	
-//    get tianqi
-//    private void getCurrentWeater(final String weatherUrl, String cityName) {
-//    	AsyncWeather loader = new AsyncWeather(getActivity().getApplicationContext());
-//    	loader.getWeather(weatherUrl, new AsyncWeather.WeatherCallback(){
-//			@Override
-//			public void onGetWeather(Weatherinfo weatherinfo, String cityName) {
-//				upDateWether(weatherinfo);
-//			}
-//		});
-//    	
-//	}
-    
    
 }

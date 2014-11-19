@@ -5,11 +5,13 @@ import java.util.List;
 
 import com.piscen.huakai.AppBase;
 import com.piscen.huakai.R;
+import com.piscen.huakai.adapter.Main_GridViewAdapter;
 import com.piscen.huakai.common.NewsXmlParser;
 import com.piscen.huakai.dto.MagazineCover;
 import com.piscen.huakai.view.SlideImageLayout;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -50,19 +52,33 @@ public class MainAct extends BaseActivity{
 	// 数据解析类
 	private NewsXmlParser mParser = null; 
 	private GridView main_gridview;
-
-	private Bitmap [] bitmap = {BitmapFactory.decodeResource(getResources(), R.drawable.first),BitmapFactory.decodeResource(getResources(), R.drawable.two),BitmapFactory.decodeResource(getResources(), R.drawable.three)
-			,BitmapFactory.decodeResource(getResources(), R.drawable.four),BitmapFactory.decodeResource(getResources(), R.drawable.six)};
+	//预览数据
+	private int [] bitmap = { R.drawable.first, R.drawable.two, R.drawable.three, R.drawable.four,R.drawable.ic_launcher,R.drawable.six};
+	private String [] titles = {"第一期","第二期","第三期","第四期","第五期","第六期"};
 	private List<MagazineCover> list = new ArrayList<MagazineCover>();
+	private Main_GridViewAdapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setTheme(android.R.style.Theme_Translucent_NoTitleBar);	
+		getMagazineCoverData();
 		// 初始化
 		initeViews(); 
 		
 	}
-	
+	/**
+	 * 得到显示数据  暂时只是固定数据
+	 */
+	private List<MagazineCover> getMagazineCoverData() {
+			for (int i = 0; i < 6; i++) {
+				MagazineCover m = new MagazineCover();
+				m.setCover(BitmapFactory.decodeResource(getResources(), bitmap[i]));
+				m.setTitle(titles[i]);
+				list.add(m);
+			}
+			return list;
+	}
+
 	/**
 	 * 初始化
 	 */
@@ -99,14 +115,17 @@ public class MainAct extends BaseActivity{
         
         main_gridview = (GridView) findViewById(R.id.main_gridview);
         main_gridview.setOnItemClickListener(listener);
-        
+        //加载数据
+        adapter = new Main_GridViewAdapter(list, this, MainAct.this);
+        main_gridview.setAdapter(adapter);
 	}
 	private OnItemClickListener listener = new OnItemClickListener() {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			
+			Intent intent = new Intent(MainAct.this,MagzineAct.class);
+			startActivity(intent);
 		}
 	};
 	// 滑动图片数据适配器

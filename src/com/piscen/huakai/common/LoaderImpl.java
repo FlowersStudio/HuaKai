@@ -15,29 +15,30 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.support.v4.util.LruCache;
 
 /**
- * @author Administrator
- * @desc �첽����ͼƬ������
+ * @author wu_zhang
+ * @desc 异步加载图片管理器
  */
 public class LoaderImpl {
 
-	 //�Ƿ񻺴�ͼƬ�������ļ�
+	 //是否缓存图片至本地文件
 	 private boolean diskcache = true;
-	 //����Ŀ¼,Ĭ����/data/data/package/cache/Ŀ¼
- 	 private String cachedDir;
+	 //缓存目录,默认是/data/data/package/cache/目录
+ 	 private String cachedDir = BasePath.RootFileL;
 	 
- 	 // ����������� ����  ������
+ 	 // 定义二级缓存 容器  软引用
 	 private static ConcurrentHashMap<String, SoftReference<Bitmap>> current_hashmap = 
 			                            new ConcurrentHashMap<String, SoftReference<Bitmap>>();
-	 // LruCache ��ǿ���ý�  ͼƬ����     LinkedHashMap 
+	 // LruCache 用强引用将  图片放入     LinkedHashMap 
 	 final static int memClass = (int) Runtime.getRuntime().maxMemory(); 
 	
 	 private static LruCache<String, Bitmap>  imageCache = new LruCache<String, Bitmap>(memClass/5) {
 	  protected int sizeOf(String key, Bitmap value) {  
           if(value != null) {  
-              // ����洢bitmap��ռ�õ��ֽ���  
+              // 计算存储bitmap所占用的字节数  
               return value.getRowBytes() * value.getHeight();  
           } else {  
               return 0;  
@@ -47,24 +48,24 @@ public class LoaderImpl {
       @Override  
       protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {  
           if(oldValue != null) {  
-              // ��Ӳ���û�����������ʱ����ʹ��LRU�㷨�����û�б�ʹ�õ�ͼƬת�������û���  
+              // 当硬引用缓存容量已满时，会使用LRU算法将最近没有被使用的图片转入软引用缓存  
         	  current_hashmap.put(key, new SoftReference<Bitmap>(oldValue));  
-        	  System.out.println("ͼƬ��� 2������ ");
+        	  System.out.println("图片存进 2级缓存 ");
           }  
       }  
 	};
 	
 	
 	/**
-	 * �Ƿ񻺴�ͼƬ���ⲿ�ļ�
+	 * 是否缓存图片至外部文件
 	 * @param flag 
 	 */
 	public void setCache2File(boolean diskcache){
-		diskcache = diskcache;
+		this.diskcache = diskcache;
 	}
 	
 	/**
-	 * ���û���ͼƬ���ⲿ�ļ���·��
+	 * 设置缓存图片到外部文件的路径
 	 * @param cacheDir
 	 */
 	public void setCachedDir(String cacheDir){
@@ -72,7 +73,7 @@ public class LoaderImpl {
 	}
 	
 	/**
-	 * �����������ͼƬ
+	 * 从网络端下载图片
 	 */
 	public Bitmap getBitmapFromUrl(String url, boolean cache2Memory){
 		Bitmap bitmap = null;
@@ -81,14 +82,14 @@ public class LoaderImpl {
 			HttpURLConnection conn = (HttpURLConnection)u.openConnection();  
 			InputStream is = conn.getInputStream();
 			bitmap = BitmapFactory.decodeStream(is);
-			System.out.println("��������=="+ url);
+			System.out.println("网络下载=="+ url);
 			
 			if(cache2Memory){
-				//1.����bitmap���ڴ���������
+				//1.缓存bitmap至内存软引用中
 				imageCache.put(url, bitmap);
 				if(diskcache){
-					System.out.println("���浽����==="+ url);
-					//2.����bitmap��/data/data/packageName/cache/�ļ�����
+					System.out.println("缓存到本地==="+ url);
+					//2.缓存bitmap至/data/data/packageName/cache/文件夹中
 					String fileName = getMD5Str(url);
 					String filePath = this.cachedDir + "/" +fileName;
 					FileOutputStream fos = new FileOutputStream(filePath);
@@ -105,7 +106,7 @@ public class LoaderImpl {
 	}
 	
 	/**
-	 * ���ڴ滺���л�ȡbitmap
+	 * 从内存缓存中获取bitmap
 	 * @param url
 	 * @return bitmap or null.
 	 */
@@ -115,30 +116,30 @@ public class LoaderImpl {
 				bitmap = imageCache.get(url);
 				if (null != bitmap) {
 					imageCache.remove(url);
-					// ���� LRU��Least Recently Used ��������ʹ���㷨 �ڴ��㷨 �ͽ� �� ԭ�� �ŵ���λ
+					// 按照 LRU是Least Recently Used 近期最少使用算法 内存算法 就近 就 原则 放到首位
 					imageCache.put(url, bitmap);
-					System.out.println(" �ڻ���1����ͼƬ�� =" + url);
+					System.out.println(" 在缓存1中找图片了 =" + url);
 					return bitmap;
 				}
 			}
 		 
 		 
-	    // 2. ������ ������
+	    // 2. 到二级 缓存找
 		SoftReference<Bitmap> soft = current_hashmap.get(url);
 		if (soft != null) {
-			//�õ� ������ �е�ͼƬ
+			//得到 软连接 中的图片
 			Bitmap soft_bitmap = soft.get();      
 			if (null != soft_bitmap) {
-				System.out.println(" �ڻ���2����ͼƬ�� =" + url);
+				System.out.println(" 在缓存2中找图片了 =" + url);
 				return soft_bitmap;
 			}
 		} else {
-			// û��ͼƬ�Ļ� �����keyɾ��
+			// 没有图片的话 把这个key删除
 			current_hashmap.remove(url);      
 		}
 		
 		
-		//���ⲿ�����ļ���ȡ
+		//从外部缓存文件读取
 		if(diskcache){
 			bitmap = getBitmapFromFile(url);
 			if(bitmap != null)
@@ -149,7 +150,7 @@ public class LoaderImpl {
 	}
 	
 	/**
-	 * ���ⲿ�ļ������л�ȡbitmap
+	 * 从外部文件缓存中获取bitmap
 	 * @param url
 	 * @return
 	 */
@@ -164,7 +165,6 @@ public class LoaderImpl {
 			FileInputStream fis = new FileInputStream(filePath);
 			bitmap = BitmapFactory.decodeStream(fis);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 			bitmap = null;
 		}
 		return bitmap;
@@ -172,7 +172,7 @@ public class LoaderImpl {
 	
 	
 	/**  
-     * MD5 ����  
+     * MD5 加密  
      */   
     private static String getMD5Str(String str) {   
         MessageDigest messageDigest = null;   
@@ -201,7 +201,7 @@ public class LoaderImpl {
     }  
 
 	/**  
-     * MD5 ����  
+     * MD5 加密  
     private static String getMD5Str(Object...objects){
     	StringBuilder stringBuilder=new StringBuilder();
     	for (Object object : objects) {

@@ -37,7 +37,8 @@ public class MagzineAct extends FragmentActivity implements ArrayListFragment.ge
 	}
 
 	private void initView() {
-		
+		 mPager = (ViewPager)findViewById(R.id.viewpager);
+	        GetInfoDate();
 	}
 	 //这个其实是先获取各种 图片的地址 我做成假的放在adapter中了,
     //所以直接去塞入adapter

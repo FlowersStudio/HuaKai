@@ -66,7 +66,7 @@ public class AppBase extends Application {
 	 */
 	public void onCreate() {
 		super.onCreate();
-		setTag("TUANCHE");
+		setTag("HUAKAI");
 		setSdk(android.os.Build.VERSION.SDK_INT);
 		setPackName(getPackageName());
 		instance = this;

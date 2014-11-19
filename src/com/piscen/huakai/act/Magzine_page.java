@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ArrayListFragment extends Fragment {
+public class Magzine_page extends Fragment {
 
     public  ImageView image;
 	public  getInfo mCallBack;

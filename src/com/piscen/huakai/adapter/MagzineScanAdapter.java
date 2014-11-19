@@ -3,7 +3,7 @@ package com.piscen.huakai.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.piscen.huakai.act.ArrayListFragment;
+import com.piscen.huakai.act.Magzine_page;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -50,14 +50,14 @@ public class MagzineScanAdapter extends FragmentPagerAdapter {
     
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-    	ArrayListFragment ff = (ArrayListFragment) super.instantiateItem(container, position);
+    	Magzine_page ff = (Magzine_page) super.instantiateItem(container, position);
         ff.setShowInfo(all_info.get(position), URLS[position]);
         return ff;
     }
 
 	@Override
     public Fragment getItem(int position) {
-		return new ArrayListFragment();
+		return new Magzine_page();
 		 
     }
 	

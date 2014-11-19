@@ -1,0 +1,20 @@
+<resources>
+
+    <color name = "dark">#f0f0f0</color>
+    <color name = "light_dark">#adacac</color>
+    
+    
+    <color name = "light_orange">#f35d00</color>
+    <color name = "light_black">#333333</color>
+    <color name = "date_hui">#CCCCCC</color>
+    <color name = "white">#fff</color>
+    <color name = "black">#000</color>
+    <color name = "black_write">#666666</color>
+    <color name = "list_devider_color">#e6e6e6</color>
+    <color name = "list_item_color_press">#f35d00</color>
+    <color name = "num_color">#666666</color>
+    <color name = "point_green">#60ae49</color>
+    <color name = "point_yellow">#fab529</color>
+    <color name = "point_red">#ff0000</color>
+    
+</resources>

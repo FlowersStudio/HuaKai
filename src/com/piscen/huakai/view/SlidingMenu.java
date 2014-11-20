@@ -176,14 +176,16 @@ public class SlidingMenu extends RelativeLayout {
 			final float dx = x - mLastMotionX;
 			final float xDiff = Math.abs(dx);
 			final float yDiff = Math.abs(y - mLastMotionY);
-			if (xDiff > mTouchSlop && xDiff > yDiff) {
+			if (xDiff > mTouchSlop && xDiff > yDiff && y > getHeight()/3) {
 				if (canSlideLeft) {
 					float oldScrollX = mSlidingView.getScrollX();
 					if (oldScrollX < 0) {
 						mIsBeingDragged = true;
+						System.out.println("mIsBeingDragged=========="+111+"y"+y);
 						mLastMotionX = x;
 					} else {
 						if (dx > 0) {
+							System.out.println("mIsBeingDragged=========="+222+"y"+y);
 							mIsBeingDragged = true;
 							mLastMotionX = x;
 						}
@@ -192,20 +194,24 @@ public class SlidingMenu extends RelativeLayout {
 				} else if (canSlideRight) {
 					float oldScrollX = mSlidingView.getScrollX();
 					if (oldScrollX > 0) {
+						System.out.println("mIsBeingDragged=========="+333+"y"+y);
 						mIsBeingDragged = true;
 						mLastMotionX = x;
 					} else {
 						if (dx < 0) {
+							System.out.println("mIsBeingDragged=========="+444+"y"+y);
 							mIsBeingDragged = true;
 							mLastMotionX = x;
 						}
 					}
 				}
 
+			}else{
+				mIsBeingDragged = false;
 			}
 			break;
-
 		}
+		System.out.println("mIsBeingDragged=========="+mIsBeingDragged);
 		return mIsBeingDragged;
 	}
 
@@ -330,14 +336,10 @@ public class SlidingMenu extends RelativeLayout {
 						}
 					}
 				}
-
 				smoothScrollTo(dx);
-
 			}
-
 			break;
 		}
-
 		return true;
 	}
 

@@ -30,12 +30,12 @@
                 android:src="@drawable/icon" />
         </LinearLayout>
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="花开"
-            android:textSize="40dip" />
+            android:src="@drawable/ic_launch"
+            />
 
         <LinearLayout
             android:id="@+id/showRight"
@@ -78,7 +78,7 @@
                     <android.support.v4.view.ViewPager
                         android:id="@+id/image_slide_page"
                         android:layout_width="fill_parent"
-                        android:layout_height="300dip"
+                        android:layout_height="250dip"
                         android:focusable="true" />
 
                     <RelativeLayout

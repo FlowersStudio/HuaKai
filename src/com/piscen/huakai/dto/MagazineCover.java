@@ -8,15 +8,15 @@ import android.graphics.Bitmap;
  * @TODO  杂志预览
  */
 public class MagazineCover {
-	private String name;//期数
+	private String version;//期数
 	private Bitmap cover;//封面
 	private String title;//标题
 	private String time;//日期
 	public String getName() {
-		return name;
+		return version;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.version = name;
 	}
 	public Bitmap getCover() {
 		return cover;

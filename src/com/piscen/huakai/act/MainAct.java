@@ -8,6 +8,7 @@ import com.piscen.huakai.R;
 import com.piscen.huakai.adapter.Main_GridViewAdapter;
 import com.piscen.huakai.common.NewsXmlParser;
 import com.piscen.huakai.dto.MagazineCover;
+import com.piscen.huakai.view.MyGridView;
 import com.piscen.huakai.view.SlideImageLayout;
 
 import android.app.Activity;
@@ -16,16 +17,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -34,12 +38,10 @@ import android.widget.TextView;
  * @2014-11-17下午5:24:31
  * @TODO  
  */ 
-public class MainAct extends BaseActivity{
+public class MainAct extends Fragment{
 	// 滑动图片的集合
 	private ArrayList<View> mImagePageViewList = null;
-	private ViewGroup mMainView = null;
 	private ViewPager mViewPager = null;
-	
 	// 包含圆点图片的View
 	private ViewGroup mImageCircleView = null;
 	private ImageView[] mImageCircleViews = null; 
@@ -51,20 +53,40 @@ public class MainAct extends BaseActivity{
 	private SlideImageLayout mSlideLayout = null;
 	// 数据解析类
 	private NewsXmlParser mParser = null; 
-	private GridView main_gridview;
+	private MyGridView main_gridview;
 	//预览数据
-	private int [] bitmap = { R.drawable.first, R.drawable.two, R.drawable.three, R.drawable.four,R.drawable.ic_launcher,R.drawable.six};
+	private int [] bitmap = { R.drawable.first, R.drawable.two, R.drawable.three, R.drawable.four,R.drawable.ic_launch,R.drawable.six};
 	private String [] titles = {"第一期","第二期","第三期","第四期","第五期","第六期"};
 	private List<MagazineCover> list = new ArrayList<MagazineCover>();
 	private Main_GridViewAdapter adapter;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setTheme(android.R.style.Theme_Translucent_NoTitleBar);	
+	//显示sliding
+	private  LinearLayout showLeft,showRight;
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.page_topic_news, null);
 		getMagazineCoverData();
 		// 初始化
-		initeViews(); 
-		
+		initeViews(view); 
+		return view;
+	}
+
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		showLeft.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				((SlidingActivity) getActivity()).showLeft();
+			}
+		});
+
+		showRight.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				((SlidingActivity) getActivity()).showRight();
+			}
+		});
 	}
 	/**
 	 * 得到显示数据  暂时只是固定数据
@@ -82,19 +104,17 @@ public class MainAct extends BaseActivity{
 	/**
 	 * 初始化
 	 */
-	private void initeViews(){
+	private void initeViews(View view){
 		// 滑动图片区域
 		mImagePageViewList = new ArrayList<View>();
-		LayoutInflater inflater = getLayoutInflater();  
-		mMainView = (ViewGroup)inflater.inflate(R.layout.page_topic_news, null);
-		mViewPager = (ViewPager) mMainView.findViewById(R.id.image_slide_page);  
+		mViewPager = (ViewPager)view.findViewById(R.id.image_slide_page);  
 		
 		// 圆点图片区域
 		mParser = new NewsXmlParser();
 		int length = mParser.getSlideImages().length;
 		mImageCircleViews = new ImageView[length];
-		mImageCircleView = (ViewGroup) mMainView.findViewById(R.id.layout_circle_images);
-		mSlideLayout = new SlideImageLayout(MainAct.this);
+		mImageCircleView = (ViewGroup)view.findViewById(R.id.layout_circle_images);
+		mSlideLayout = new SlideImageLayout(getActivity().getApplicationContext());
 		mSlideLayout.setCircleImageLayout(length);
 		
 		for(int i = 0; i < length; i++){
@@ -104,27 +124,30 @@ public class MainAct extends BaseActivity{
 		}
 		
 		// 设置默认的滑动标题
-		mSlideTitle = (TextView) mMainView.findViewById(R.id.tvSlideTitle);
+		mSlideTitle = (TextView)view.findViewById(R.id.tvSlideTitle);
 		mSlideTitle.setText(mParser.getSlideTitles()[0]);
 		
-		setContentView(mMainView);
+		
 		
 		// 设置ViewPager
         mViewPager.setAdapter(new SlideImageAdapter());  
         mViewPager.setOnPageChangeListener(new ImagePageChangeListener());
         
-        main_gridview = (GridView) findViewById(R.id.main_gridview);
+        main_gridview = (MyGridView) view.findViewById(R.id.main_gridview);
         main_gridview.setOnItemClickListener(listener);
         //加载数据
-        adapter = new Main_GridViewAdapter(list, this, MainAct.this);
+        adapter = new Main_GridViewAdapter(list, getActivity(), getActivity());
         main_gridview.setAdapter(adapter);
+        
+        showLeft = (LinearLayout) view.findViewById(R.id.showLeft);
+        showRight = (LinearLayout) view.findViewById(R.id.showRight);
 	}
 	private OnItemClickListener listener = new OnItemClickListener() {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			Intent intent = new Intent(MainAct.this,MagzineAct.class);
+			Intent intent = new Intent(getActivity(),MagzineAct.class);
 			startActivity(intent);
 		}
 	};
@@ -201,4 +224,5 @@ public class MainAct extends BaseActivity{
             }
         }  
     }
+
 }

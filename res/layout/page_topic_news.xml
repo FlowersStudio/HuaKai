@@ -1,24 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/center_frame"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:fillViewport="true"
     android:background="@color/white"
     android:orientation="vertical" >
-
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_bg" >
 
-        <ImageButton
+        <LinearLayout
+            android:id="@+id/showLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_drawer" />
+            android:background="@drawable/base_item_seletor" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_drawer" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="7dip"
+                android:src="@drawable/icon" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="花开"
+            android:textSize="40dip" />
+
+        <LinearLayout
+            android:id="@+id/showRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/base_item_seletor" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon" />
+        </LinearLayout>
     </RelativeLayout>
 
-     <com.piscen.huakai.view.ScrollViewExtend
+    <com.piscen.huakai.view.ScrollViewExtend
         android:layout_width="match_parent"
-        android:layout_height="fill_parent" > 
+        android:layout_height="fill_parent" >
 
         <LinearLayout
             android:id="@+id/linearlayout_news_main"
@@ -81,7 +117,6 @@
                                 android:textSize="13dip" />
                         </LinearLayout>
                     </RelativeLayout>
-
                 </RelativeLayout>
             </LinearLayout>
 
@@ -111,6 +146,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/divider_horizontal_line"
+                        android:gravity="center_horizontal"
                         android:orientation="vertical" >
                     </LinearLayout>
                 </LinearLayout>
@@ -126,6 +162,5 @@
                 android:stretchMode="columnWidth"
                 android:verticalSpacing="10dp" />
         </LinearLayout>
-    </com.piscen.huakai.view.ScrollViewExtend> 
-
+    </com.piscen.huakai.view.ScrollViewExtend>
 </LinearLayout>

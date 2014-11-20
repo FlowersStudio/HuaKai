@@ -8,13 +8,14 @@ import com.piscen.huakai.common.CrashHandler.OnExcepteionCrashListener;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 /**
  * 
  * @author wu_zhang
  * @2014-11-17下午5:24:48
  * @TODO
  */
-public class BaseActivity extends Activity implements OnExcepteionCrashListener{
+public class BaseActivity extends FragmentActivity implements OnExcepteionCrashListener{
 	private CrashHandler crash;
 	protected AppBase app;
 	@Override

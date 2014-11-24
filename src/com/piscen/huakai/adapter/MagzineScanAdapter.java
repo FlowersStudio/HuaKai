@@ -28,7 +28,8 @@ public class MagzineScanAdapter extends FragmentPagerAdapter {
 		
         /**  惯例我在adapter初始化的时候造的假数据  **/
         for (int i = 0; i < 38; i++) {
-			URLS[i] = root + (i+1)+".jpg";
+//			URLS[i] = root + (i+1)+".jpg";
+			URLS[i] = "http://metro2.sinaapp.com/images/img590x390.jpg";
 		}	
 		
         for (int i = 0; i < 99; i++) {

@@ -19,7 +19,7 @@ public class HttpHandler extends Handler {
 	private Context context;
 	private ProgressDialog progressDialog;
 	protected boolean showProgress = true;
-	private final static String TAG = "com.tuanche.fault.http";
+	private final static String TAG = "com.piscen.huakai.http";
 
 	public HttpHandler(Context context) {
 		this.context = context;

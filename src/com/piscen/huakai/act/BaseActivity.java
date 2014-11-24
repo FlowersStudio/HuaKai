@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.widget.Toast;
 /**
  * 
  * @author wu_zhang
@@ -18,6 +19,7 @@ import android.support.v4.app.FragmentActivity;
 public class BaseActivity extends FragmentActivity implements OnExcepteionCrashListener{
 	private CrashHandler crash;
 	protected AppBase app;
+	private Toast mToast;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,5 +33,14 @@ public class BaseActivity extends FragmentActivity implements OnExcepteionCrashL
 	public void OnExcepteionCrash(Context mContext) {
 		// TODO Auto-generated method stub
 		
+	}
+	public void showToast(String text) {
+		if (mToast == null) {
+			mToast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+		} else {
+			mToast.setText(text);
+			mToast.setDuration(Toast.LENGTH_SHORT);
+		}
+		mToast.show();
 	}
 }

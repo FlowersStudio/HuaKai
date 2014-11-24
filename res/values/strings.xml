@@ -10,4 +10,12 @@
     <string name="title3">神舟九号：宇航员会携带什么移动应用上天？</string>
     <string name="title4">2012苹果全球开发者大会（WWDC）12日开幕</string>
     <string name="title5">Win8说：请把PC丢出窗外！</string>
+    
+    
+      <string name="dialog_title">提 示</string>
+    <string name="dialog_request">正在请求数据,请稍候</string>
+    <string name="dialog_request_error">网络异常,请重试！</string>
+    <string name="dialog_positive">确 定</string>
+    <string name="dialog_negative">取 消</string>
+    <string name="dialog_exit">确定退出？</string>
 </resources>

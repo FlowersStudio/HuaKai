@@ -16,9 +16,11 @@
 package com.piscen.huakai.act;
 
 import com.piscen.huakai.R;
+import com.piscen.huakai.http.HttpHandler;
 import com.piscen.huakai.view.SlidingMenu;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 
 
@@ -34,7 +36,11 @@ public class SlidingActivity extends BaseActivity {
 		setContentView(R.layout.main);
 		init();
 	}
-
+    private Handler handler = new HttpHandler(this){
+    	protected void succeed(String response) {
+    		System.out.println("response"+response);
+    	};
+    };
 	private void init() {
 		mSlidingMenu = (SlidingMenu) findViewById(R.id.slidingMenu);
 		mSlidingMenu.setLeftView(getLayoutInflater().inflate(

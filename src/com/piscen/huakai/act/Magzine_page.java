@@ -71,19 +71,19 @@ public class Magzine_page extends Fragment {
 			mCallBack.GetInfoDate();
 		}
 	}
-	protected void start() {
-		progressDialog = new ProgressDialog(getActivity().getApplicationContext());
-		progressDialog.setCanceledOnTouchOutside(false);
-		progressDialog.setTitle("提示");
-		progressDialog.setMessage("加载中，请稍候...");
-		progressDialog.show();
-	}
-
-	protected void succeed() {
-		if (progressDialog != null && progressDialog.isShowing()) {
-			progressDialog.dismiss();
-		}
-	}
+//	protected void start() {
+//		progressDialog = new ProgressDialog(getActivity().getApplicationContext());
+//		progressDialog.setCanceledOnTouchOutside(false);
+//		progressDialog.setTitle("提示");
+//		progressDialog.setMessage("加载中，请稍候...");
+//		progressDialog.show();
+//	}
+//
+//	protected void succeed() {
+//		if (progressDialog != null && progressDialog.isShowing()) {
+//			progressDialog.dismiss();
+//		}
+//	}
 	
 	 /**
      * 设置

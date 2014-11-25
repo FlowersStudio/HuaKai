@@ -8,5 +8,6 @@ package com.piscen.huakai.common;
 public class RequestUrls {
 	
 	public static String BATH_URL = "http://metro2.sinaapp.com/VdsController/vdsInterface"; 
-	public static String IMAGE_URL = "http://metro2.sinaapp.com/images";
+	public static String IMAGE_URL = "http://metro2.sinaapp.com/images/";
+	
 }

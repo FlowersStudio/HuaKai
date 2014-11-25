@@ -1,7 +1,9 @@
 package com.piscen.huakai.listen;
 
+import java.util.List;
+
 import com.piscen.huakai.R;
-import com.piscen.huakai.common.NewsXmlParser;
+import com.piscen.huakai.dto.TopNews;
 import com.piscen.huakai.view.SlideImageLayout;
 
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -18,28 +20,24 @@ public class ImagePageChangeListener implements OnPageChangeListener {
 	private SlideImageLayout mSlideLayout = null;
 	// 滑动标题
 	private TextView mSlideTitle = null;
-	
+	List<TopNews> list;
 	private ImageView[] mImageCircleViews = null; 
-	// 数据解析类
-	private NewsXmlParser mParser = null; 
 	public ImagePageChangeListener(SlideImageLayout mSlideLayout,
 			TextView mSlideTitle, ImageView[] mImageCircleViews,
-			NewsXmlParser mParser) {
+			List<TopNews> list) {
 		super();
 		this.mSlideLayout = mSlideLayout;
 		this.mSlideTitle = mSlideTitle;
 		this.mImageCircleViews = mImageCircleViews;
-		this.mParser = mParser;
+		this.list = list;
 	}
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onPageScrolled(int arg0, float arg1, int arg2) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -47,7 +45,7 @@ public class ImagePageChangeListener implements OnPageChangeListener {
 	public void onPageSelected(int arg0) {  
 //    	pageIndex = index;
     	mSlideLayout.setPageIndex(arg0);
-    	mSlideTitle.setText(mParser.getSlideTitles()[arg0]);
+    	mSlideTitle.setText(list.get(arg0).getSlideTitles());
     	
         for (int i = 0; i < mImageCircleViews.length; i++) {  
         	mImageCircleViews[arg0].setBackgroundResource(R.drawable.dot_selected);

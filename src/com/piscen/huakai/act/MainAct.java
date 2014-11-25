@@ -13,13 +13,13 @@ import com.piscen.huakai.R;
 import com.piscen.huakai.adapter.Main_GridViewAdapter;
 import com.piscen.huakai.adapter.SlideImageAdapter;
 import com.piscen.huakai.common.GsonUtils;
-import com.piscen.huakai.common.NewsXmlParser;
 import com.piscen.huakai.common.RequestUrls;
 import com.piscen.huakai.common.ResponseState;
 import com.piscen.huakai.common.StringUtils;
 import com.piscen.huakai.dto.FirstPageListReq;
 import com.piscen.huakai.dto.FirstPageListResp;
 import com.piscen.huakai.dto.Magazine;
+import com.piscen.huakai.dto.TopNews;
 import com.piscen.huakai.http.HttpHandler;
 import com.piscen.huakai.http.HttpRequest;
 import com.piscen.huakai.http.JsonUtil;
@@ -56,7 +56,7 @@ import android.widget.TextView;
  */ 
 public class MainAct extends Fragment{
 	// 滑动图片的集合
-	private ArrayList<View> mImagePageViewList = null;
+	private List<View> mTopNewsList = null;
 	private ViewPager mViewPager = null;
 	// 包含圆点图片的View
 	private ViewGroup mImageCircleView = null;
@@ -66,38 +66,24 @@ public class MainAct extends Fragment{
 
 	// 布局设置类
 	private SlideImageLayout mSlideLayout = null;
-	// 数据解析类
-	private NewsXmlParser mParser = null; 
+	
 	private MyGridView main_gridview;
-	//预览数据
-	private int [] bitmap = { R.drawable.first, R.drawable.two, R.drawable.three, R.drawable.four,R.drawable.ic_launch,R.drawable.six};
-	private String [] titles = {"第一期","第二期","第三期","第四期","第五期","第六期"};
+	
 	private List<Magazine> list = new ArrayList<Magazine>();
 	private Main_GridViewAdapter adapter;
+	private View view;
 	//显示sliding
 	private  LinearLayout showLeft,showRight;
+	//顶部滑动图片数据
+	private List<TopNews> listTopNews;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.page_topic_news, null);
+		 view = inflater.inflate(R.layout.page_topic_news, null);
 		// 初始化
-		initeViews(view); 
 		query();
 		return view;
 	}
 
-	/**
-	 * 得到显示数据  暂时只是固定数据
-	 */
-	//	private List<Magazine> getMagazineCoverData() {
-	//			for (int i = 0; i < 6; i++) {
-	//				Magazine m = new Magazine();
-	//				m.setCover(BitmapFactory.decodeResource(getResources(), bitmap[i]));
-	//				m.setTitle(titles[i]);
-	//				list.add(m);
-	//			}
-	//			return list;
-
-	//	}
 	/**
 	 * 查询服务器数据
 	 * 
@@ -116,25 +102,25 @@ public class MainAct extends Fragment{
 	}
 	//访问返回的数据
 	private Handler FdqueryHandler = new HttpHandler(getActivity()){
+		
 		protected void succeed(String response) {
+			System.out.println("response:"+response);
 			initState(response);
 		};
 		protected void failed(String response) { 
 			
 		};
 	};
+	
 	private void initState(String response){
 		FirstPageListResp resp = JsonUtil.json2Entity(response, "FirstPageListResp");
 		int code = Integer.valueOf(resp.getCode());
 		if( code == ResponseState.SUCCESSED){
 			list = resp.getList();
 			if(list != null){
-
-				main_gridview.setOnItemClickListener(listener);
-				//加载数据
-				adapter = new Main_GridViewAdapter(list, getActivity(), getActivity());
-				main_gridview.setAdapter(adapter);
+				initeViews(view, resp); 
 			} 
+			listTopNews = resp.getListnews();
 		}
 		if(code == ResponseState.SYSERROR){
 			((BaseActivity) getActivity()).showToast("系统错误");
@@ -149,41 +135,39 @@ public class MainAct extends Fragment{
 	/**
 	 * 初始化
 	 */
-	private void initeViews(View view){
+	private void initeViews(View view,FirstPageListResp resp){
 		// 滑动图片区域
-		mImagePageViewList = new ArrayList<View>();
+		mTopNewsList = new ArrayList<View>();
 		mViewPager = (ViewPager)view.findViewById(R.id.image_slide_page);  
 		// 圆点图片区域
-		mParser = new NewsXmlParser();
-		int length = mParser.getSlideImages().length;
+		int length = resp.getListnews().size();
 		mImageCircleViews = new ImageView[length];
 		mImageCircleView = (ViewGroup)view.findViewById(R.id.layout_circle_images);
-		mSlideLayout = new SlideImageLayout(getActivity().getApplicationContext());
+		mSlideLayout = new SlideImageLayout(getActivity().getApplicationContext(),resp.getListnews());
 		mSlideLayout.setCircleImageLayout(length);
 
 		for(int i = 0; i < length; i++){
-			mImagePageViewList.add(mSlideLayout.getSlideImageLayout(mParser.getSlideImages()[i]));
+			mTopNewsList.add(mSlideLayout.getSlideImageLayout(RequestUrls.IMAGE_URL+resp.getListnews().get(i).getSlideImages(),getActivity()));
 			mImageCircleViews[i] = mSlideLayout.getCircleImageLayout(i);
 			mImageCircleView.addView(mSlideLayout.getLinearLayout(mImageCircleViews[i], 10, 10));
 		}
 
 		// 设置默认的滑动标题
 		mSlideTitle = (TextView)view.findViewById(R.id.tvSlideTitle);
-		mSlideTitle.setText(mParser.getSlideTitles()[0]);
+		mSlideTitle.setText(resp.getListnews().get(0).getSlideTitles());
 
 		main_gridview = (MyGridView) view.findViewById(R.id.main_gridview);
-
+		main_gridview.setOnItemClickListener(listener);
+		//加载数据
+		adapter = new Main_GridViewAdapter(list, getActivity(), getActivity());
+		main_gridview.setAdapter(adapter);
+		
 		// 设置ViewPager
-		mViewPager.setAdapter(new SlideImageAdapter(mImagePageViewList));  
-		mViewPager.setOnPageChangeListener(new ImagePageChangeListener(mSlideLayout, mSlideTitle, mImageCircleViews, mParser));
+		mViewPager.setAdapter(new SlideImageAdapter(mTopNewsList));  
+		mViewPager.setOnPageChangeListener(new ImagePageChangeListener(mSlideLayout, mSlideTitle, mImageCircleViews, resp.getListnews()));
 
 		showLeft = (LinearLayout) view.findViewById(R.id.showLeft);
 		showRight = (LinearLayout) view.findViewById(R.id.showRight);
-	}
-
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-
 		showLeft.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -200,14 +184,23 @@ public class MainAct extends Fragment{
 			}
 		});
 	}
+
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		
+	}
 	//点击item跳转
 	private OnItemClickListener listener = new OnItemClickListener() {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			Intent intent = new Intent(getActivity(),MagzineAct.class);
-			startActivity(intent);
+			if(list != null){
+				Intent intent = new Intent(getActivity(),MagzineAct.class);
+				intent.putExtra("type", list.get(position).getType());
+				intent.putExtra("Periods", list.get(position).getPeriods());
+				startActivity(intent);
+			}
 		}
 	};
 

@@ -1,11 +1,17 @@
 package com.piscen.huakai.view;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.piscen.huakai.R;
-import com.piscen.huakai.common.NewsXmlParser;
+import com.piscen.huakai.common.ImageDownloader;
+import com.piscen.huakai.common.OnImageDownload;
+import com.piscen.huakai.common.RequestUrls;
+import com.piscen.huakai.dto.TopNews;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -26,14 +32,13 @@ public class SlideImageLayout {
 	// 圆点图片集合
 	private ImageView[] mImageViews = null; 
 	private ImageView mImageView = null;
-	private NewsXmlParser mParser = null;
 	// 表示当前滑动图片的索引
 	private int pageIndex = 0;
-	
-	public SlideImageLayout(Context context) {
+	List<TopNews> list;
+	public SlideImageLayout(Context context,List<TopNews> List) {
 		this.mContext = context;
 		mImageList = new ArrayList<ImageView>();
-		mParser = new NewsXmlParser();
+		this.list = List;
 	}
 	
 	/**
@@ -41,7 +46,7 @@ public class SlideImageLayout {
 	 * @param id
 	 * @return
 	 */
-	public View getSlideImageLayout(int id){
+	public View getSlideImageLayout(String  url,Activity activity){
 		// 包含TextView的LinearLayout
 		LinearLayout imageLinerLayout = new LinearLayout(mContext);
 		LinearLayout.LayoutParams imageLinerLayoutParames = new LinearLayout.LayoutParams(
@@ -50,14 +55,39 @@ public class SlideImageLayout {
 				1);
 		
 		ImageView iv = new ImageView(mContext);
-		iv.setBackgroundResource(id);
+//		iv.setBackgroundResource(id);
+		setImageAsync(iv, url,activity);
 		iv.setOnClickListener(new ImageOnClickListener());
 		imageLinerLayout.addView(iv,imageLinerLayoutParames);
 		mImageList.add(iv);
 		
 		return imageLinerLayout;
 	}
-	
+	ImageDownloader mDownloader;
+	//异步加载顶部滑动图片
+	private void setImageAsync(ImageView v,final String url,Activity activity){
+		v.setTag(url);
+		if (mDownloader == null) {  
+			mDownloader = new ImageDownloader();  
+		}  
+		//这句代码的作用是为了解决convertView被重用的时候，图片预设的问题  
+		v.setImageResource(R.drawable.ic_launch);  
+		if (mDownloader != null) {  
+			//异步下载图片  
+			mDownloader.imageDownload(url, v, "/yanbin",activity, new OnImageDownload() {  
+				@Override  
+				public void onDownloadSucc(Bitmap bitmap,  
+						String c_url,ImageView mimageView) {  
+					// 通过 tag 来防止图片错位
+					if (mimageView.getTag() != null
+							&& mimageView.getTag().equals(url)) {
+						mimageView.setImageBitmap(bitmap);
+						mimageView.setTag("");  
+					}
+				}  
+			});  
+		}
+	}
 	/**
 	 * 获取LinearLayout
 	 * @param view
@@ -120,8 +150,8 @@ public class SlideImageLayout {
     private class ImageOnClickListener implements OnClickListener{
     	@Override
     	public void onClick(View v) {
-    		Toast.makeText(mContext, mParser.getSlideTitles()[pageIndex], Toast.LENGTH_SHORT).show();
-    		Toast.makeText(mContext, mParser.getSlideUrls()[pageIndex], Toast.LENGTH_SHORT).show();
+    		Toast.makeText(mContext, list.get(pageIndex).getSlideTitles(), Toast.LENGTH_SHORT).show();
+    		Toast.makeText(mContext, list.get(pageIndex).getSlideUrls(), Toast.LENGTH_SHORT).show();
     	}
     }
 }

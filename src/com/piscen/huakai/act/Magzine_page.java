@@ -104,7 +104,7 @@ public class Magzine_page extends Fragment {
             public void onImageLoaded(Bitmap bitmap, String imageUrl) { 
                 
             	if(bitmap != null){
-                	image.setBackgroundDrawable(new BitmapDrawable(bitmap));
+                	image.setImageBitmap(bitmap);
 //                    succeed();
                 }else{  
                     //下载失败，设置默认图片  

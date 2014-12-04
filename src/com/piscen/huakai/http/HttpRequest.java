@@ -148,7 +148,7 @@ public class HttpRequest implements Runnable {
 					handler.sendMessage(Message.obtain(handler, REQUEST_NOT_SC_OK, null));					
 				}
 			}			
-		} catch (Exception e) {
+		} catch (Exception e) { 
 			handler.sendMessage(Message.obtain(handler, REQUEST_ERROR, e));
 		}
 		HttpConnection.getInstance().finish(this);
@@ -208,4 +208,6 @@ public class HttpRequest implements Runnable {
 		}
 		return ret;
 	}
+	
+	
 }

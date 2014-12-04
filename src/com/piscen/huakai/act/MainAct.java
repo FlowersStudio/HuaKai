@@ -104,7 +104,7 @@ public class MainAct extends Fragment{
 	private Handler FdqueryHandler = new HttpHandler(getActivity()){
 		
 		protected void succeed(String response) {
-			System.out.println("response:"+response);
+			System.out.println("response....:"+response);
 			initState(response);
 		};
 		protected void failed(String response) { 

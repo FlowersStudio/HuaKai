@@ -1,9 +1,9 @@
 package com.piscen.huakai.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.piscen.huakai.act.Magzine_page;
+import com.piscen.huakai.common.RequestUrls;
 import com.piscen.huakai.dto.MagzinePage;
 
 import android.support.v4.app.Fragment;
@@ -55,7 +55,8 @@ public class MagzineScanAdapter extends FragmentPagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
     	Magzine_page ff = (Magzine_page) super.instantiateItem(container, position);
-        ff.setShowInfo(""+list.get(position).getPagination(), list.get(position).getPageImage());
+        ff.setShowInfo(""+list.get(position).getPagination(), RequestUrls.IMAGE_URL+list.get(position).getPageImage());
+       
         return ff;
     }
 

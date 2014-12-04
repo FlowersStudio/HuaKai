@@ -53,7 +53,6 @@ public class MagzineAct extends FragmentActivity implements Magzine_page.getInfo
 	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_magzine);
 		intent = getIntent();
@@ -85,36 +84,37 @@ public class MagzineAct extends FragmentActivity implements Magzine_page.getInfo
 	};
 	private void initState(String response){
 		MagzinePageListResp resp = JsonUtil.json2Entity(response, "MagzinePageListResp");
-		int code = Integer.valueOf(resp.getCode());
-		if( code == ResponseState.SUCCESSED){
+//		int code = Integer.valueOf(resp.getCode());
+//		if( code == ResponseState.SUCCESSED){
 			list = resp.getList();
+			System.out.println("response......:"+response);
 				GetInfoDate();
-		}
-		if(code == ResponseState.SYSERROR){
-			Toast.makeText(this, "系统错误", 1).show();
-		}
-		if(code == ResponseState.DATANULL){
-			Toast.makeText(this, "数据为空", 1).show();
-		}
-		if(code == ResponseState.PARAMETERERROR){
-			Toast.makeText(this, "参数错误", 1).show();
-		}
+//		}
+//		if(code == ResponseState.SYSERROR){
+//			Toast.makeText(this, "系统错误", 1).show();
+//		}
+//		if(code == ResponseState.DATANULL){
+//			Toast.makeText(this, "数据为空", 1).show();
+//		}
+//		if(code == ResponseState.PARAMETERERROR){
+//			Toast.makeText(this, "参数错误", 1).show();
+//		}
 	}
 
 	private void initView() {
 		mPager = (ViewPager)findViewById(R.id.viewpager);
 
-		GetInfoDate();
+//		GetInfoDate();
 	}
 	@Override
 	public void GetInfoDate() {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
 				if(list!=null){
 					handler.sendMessage(new Message());
 				}
-			}
-		}).start();
+//			}
+//		}).start();
 	}
 }

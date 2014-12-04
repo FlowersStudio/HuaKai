@@ -32,6 +32,12 @@ public final class R {
         public static final int text_color=0x7f040012;
         public static final int white=0x7f040005;
     }
+    public static final class dimen {
+        public static final int setting_item_height=0x7f090000;
+        public static final int setting_item_magin_left=0x7f090002;
+        public static final int setting_item_padding=0x7f090001;
+        public static final int setting_text_magin_left=0x7f090003;
+    }
     public static final class drawable {
         public static final int ad_image_bg=0x7f020000;
         public static final int base_item_seletor=0x7f020001;
@@ -59,7 +65,13 @@ public final class R {
         public static final int loading=0x7f020017;
         public static final int magazine_cover_title_bg=0x7f020018;
         public static final int progress_medium_white=0x7f020019;
+        public static final int setting_list_bg_drawable=0x7f020023;
         public static final int setting_pressed_list_bg=0x7f02001a;
+        public static final int settings_about=0x7f020027;
+        public static final int settings_feedback=0x7f020025;
+        public static final int settings_push=0x7f020024;
+        public static final int settings_recomment=0x7f020028;
+        public static final int settings_score=0x7f020026;
         public static final int shade_bg=0x7f02001b;
         public static final int six=0x7f02001c;
         public static final int solid_divider_ccc=0x7f02001d;
@@ -70,8 +82,12 @@ public final class R {
         public static final int zoomout=0x7f020022;
     }
     public static final class id {
+        public static final int about=0x7f08002b;
+        public static final int about_image=0x7f08002c;
         public static final int backageground=0x7f08001d;
         public static final int center_frame=0x7f080003;
+        public static final int feedback=0x7f080027;
+        public static final int feedback_image=0x7f080028;
         public static final int grade_textview=0x7f080007;
         public static final int head_view=0x7f080005;
         public static final int imageView1=0x7f080011;
@@ -88,7 +104,7 @@ public final class R {
         public static final int main_grid_image=0x7f080001;
         public static final int main_grid_text=0x7f080002;
         public static final int main_gridview=0x7f08001c;
-        public static final int menu_settings=0x7f080022;
+        public static final int menu_settings=0x7f08002f;
         public static final int mlist=0x7f080004;
         public static final int my_answer_textview=0x7f080009;
         public static final int my_collection_textview=0x7f08000a;
@@ -97,13 +113,22 @@ public final class R {
         public static final int my_question_textview=0x7f080008;
         public static final int my_wallet_textview=0x7f08000c;
         public static final int name_textview=0x7f080006;
+        public static final int one=0x7f080022;
+        public static final int push=0x7f080024;
+        public static final int push_image=0x7f080023;
+        public static final int push_swicth=0x7f080025;
+        public static final int recommend=0x7f08002d;
+        public static final int recommend_image=0x7f08002e;
         public static final int relativelayout_image_slide=0x7f080015;
         public static final int right_frame=0x7f080021;
+        public static final int score=0x7f080029;
+        public static final int score_image=0x7f08002a;
         public static final int showLeft=0x7f080010;
         public static final int showRight=0x7f080012;
         public static final int slidingMenu=0x7f08000f;
         public static final int title=0x7f08001e;
         public static final int tvSlideTitle=0x7f080019;
+        public static final int two=0x7f080026;
         public static final int viewpager=0x7f080000;
     }
     public static final class layout {
@@ -120,11 +145,13 @@ public final class R {
         public static final int pagers=0x7f03000a;
         public static final int right=0x7f03000b;
         public static final int right_frame=0x7f03000c;
+        public static final int setting_fragment=0x7f03000d;
     }
     public static final class menu {
         public static final int activity_main=0x7f070000;
     }
     public static final class string {
+        public static final int about_us=0x7f050011;
         public static final int app_name=0x7f050000;
         public static final int dialog_exit=0x7f05000d;
         public static final int dialog_negative=0x7f05000c;
@@ -132,8 +159,12 @@ public final class R {
         public static final int dialog_request=0x7f050009;
         public static final int dialog_request_error=0x7f05000a;
         public static final int dialog_title=0x7f050008;
+        public static final int feeback=0x7f05000f;
         public static final int hello_world=0x7f050001;
         public static final int menu_settings=0x7f050002;
+        public static final int push=0x7f05000e;
+        public static final int recommend=0x7f050012;
+        public static final int score=0x7f050010;
         /**  滑动区域文字及链接 
          */
         public static final int title1=0x7f050003;
@@ -172,6 +203,7 @@ public final class R {
         /**  透明样式 
          */
         public static final int Transparent=0x7f060004;
+        public static final int base_setting_style=0x7f060005;
         /**  顶部新闻分类条目样式 
          */
         public static final int header_title_style=0x7f060003;

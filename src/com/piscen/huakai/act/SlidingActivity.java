@@ -42,18 +42,6 @@ public class SlidingActivity extends BaseActivity {
 		setContentView(R.layout.main);
 		init();
 	}
-//	private void test(){
-//		List<NameValuePair> list = new ArrayList<NameValuePair>();
-//		new HttpRequest(FdqueryHandler).post("http://metro2.sinaapp.com/VdsController/vdsInterface", list,null);	
-//	}
-//		private Handler FdqueryHandler = new HttpHandler(this){
-//			protected void succeed(String response) {
-//				System.out.println("response"+response);
-//			};
-//			protected void failed(String response) {
-//				System.out.println("response"+response);
-//			};
-//		};
 	private void init() {
 		mSlidingMenu = (SlidingMenu) findViewById(R.id.slidingMenu);
 		mSlidingMenu.setLeftView(getLayoutInflater().inflate(

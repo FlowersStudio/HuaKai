@@ -23,24 +23,31 @@ import org.apache.http.NameValuePair;
 import com.piscen.huakai.R;
 import com.piscen.huakai.http.HttpHandler;
 import com.piscen.huakai.http.HttpRequest;
+import com.piscen.huakai.listen.UserFeedBackListener;
 import com.piscen.huakai.view.SlidingMenu;
+import com.umeng.fb.FeedbackAgent;
+import com.umeng.fb.util.Log;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
+import android.view.MenuItem;
 
 
-public class SlidingActivity extends BaseActivity {
-	SlidingMenu mSlidingMenu;
-	LeftFragment leftFragment;
-	RightFragment rightFragment;
-	MainAct viewPageFragment;
-
+public class SlidingActivity extends BaseActivity implements UserFeedBackListener {
+	private SlidingMenu mSlidingMenu;
+	private LeftFragment leftFragment;
+	private RightFragment rightFragment;
+	private MainAct viewPageFragment;
+	private static FeedbackAgent fb;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.main);
 		init();
+		fb = new FeedbackAgent(this);
+		fb.sync();
 	}
 	private void init() {
 		mSlidingMenu = (SlidingMenu) findViewById(R.id.slidingMenu);
@@ -57,13 +64,13 @@ public class SlidingActivity extends BaseActivity {
 		t.replace(R.id.left_frame, leftFragment);
 
 		rightFragment = new RightFragment();
+		rightFragment.setUserFeedBackListener(this);
 		t.replace(R.id.right_frame, rightFragment);
 
 		viewPageFragment = new MainAct();
 		t.replace(R.id.center_frame, viewPageFragment);
 		t.commit();
 	}
-
 
 	public void showLeft() {
 		mSlidingMenu.showLeftView();
@@ -72,5 +79,10 @@ public class SlidingActivity extends BaseActivity {
 	public void showRight() {
 		mSlidingMenu.showRightView();
 	}
-
+	
+	@Override
+	public void showUserFeedBack() {
+		fb.startFeedbackActivity();
+	}
+	
 }

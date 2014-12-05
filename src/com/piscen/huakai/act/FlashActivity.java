@@ -1,16 +1,24 @@
 package com.piscen.huakai.act;
 
-import com.piscen.huakai.R;
+import org.apache.http.util.TextUtils;
 
+import com.piscen.huakai.R;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.fb.FeedbackAgent;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
 public class FlashActivity extends BaseActivity {
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		MobclickAgent.updateOnlineConfig( this );
 		setContentView(R.layout.activity_flash);
+
 		new CountDownTimer(2000, 1000) {
 			@Override
 			public void onTick(long millisUntilFinished) {
@@ -23,5 +31,39 @@ public class FlashActivity extends BaseActivity {
 				finish();
 			}
 		}.start();
+		System.out.println(getDeviceInfo(this));
+		
 	}
+	
+
+public static String getDeviceInfo(Context context) {
+    try{
+      org.json.JSONObject json = new org.json.JSONObject();
+      android.telephony.TelephonyManager tm = (android.telephony.TelephonyManager) context
+          .getSystemService(Context.TELEPHONY_SERVICE);
+  
+      String device_id = tm.getDeviceId();
+      
+      android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+          
+      String mac = wifi.getConnectionInfo().getMacAddress();
+      json.put("mac", mac);
+      
+      if( TextUtils.isEmpty(device_id) ){
+        device_id = mac;
+      }
+      
+      if( TextUtils.isEmpty(device_id) ){
+        device_id = android.provider.Settings.Secure.getString(context.getContentResolver(),android.provider.Settings.Secure.ANDROID_ID);
+      }
+      
+      json.put("device_id", device_id);
+      
+      return json.toString();
+    }catch(Exception e){
+      e.printStackTrace();
+    }
+  return null;
+}
+                  
 }

@@ -4,6 +4,8 @@
     <string name="app_name">HuaKai</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+     <string name="action_settings">Settings</string>
+    <string name="action_feedback">Feedback</string>
  <!-- 滑动区域文字及链接 -->
     <string name="title1">苹果在中国市场：Google的劣势反而是苹果的优势</string>
     <string name="title2">吞噬大数据存储领域新机制——NoSQL模式解析</string>

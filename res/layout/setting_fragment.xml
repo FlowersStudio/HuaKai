@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/one"
+        android:layout_width="fill_parent"
+        android:layout_height="@+dimen/setting_item_height"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@+dimen/setting_item_padding"
+        android:layout_marginRight="@+dimen/setting_item_padding"
+        android:background="@+drawable/setting_list_bg_drawable"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/push_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@+dimen/setting_item_magin_left"
+            android:src="@+drawable/settings_push" />
+
+        <TextView
+            android:id="@+id/push"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@+dimen/setting_text_magin_left"
+            android:layout_toRightOf="@+id/push_image"
+            android:text="@+string/push"
+            android:textAppearance="@+style/base_setting_style" />
+
+        <Switch
+            android:id="@+id/push_swicth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10.0dip"
+            android:textOff="OFF"
+            android:textOn="ON" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/two"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/one"
+        android:layout_marginTop="20.0dip"
+        android:paddingLeft="@+dimen/setting_item_padding"
+        android:paddingRight="@+dimen/setting_item_padding" >
+
+        <RelativeLayout
+            android:id="@+id/feedback"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/setting_item_height"
+            android:background="@+drawable/setting_list_bg_drawable" >
+
+            <ImageView
+                android:id="@+id/feedback_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@+dimen/setting_item_magin_left"
+                android:src="@+drawable/settings_feedback" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@+dimen/setting_text_magin_left"
+                android:layout_toRightOf="@+id/feedback_image"
+                android:text="@+string/feeback"
+                android:textAppearance="@+style/base_setting_style" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/score"
+            android:layout_width="fill_parent"
+            android:layout_height="@+dimen/setting_item_height"
+            android:layout_below="@+id/feedback"
+            android:layout_marginTop="2.0dip"
+            android:background="@+drawable/setting_list_bg_drawable" >
+
+            <ImageView
+                android:id="@+id/score_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@+dimen/setting_item_magin_left"
+                android:src="@+drawable/settings_score" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@+dimen/setting_text_magin_left"
+                android:layout_toRightOf="@+id/score_image"
+                android:text="@+string/score"
+                android:textAppearance="@+style/base_setting_style" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/about"
+            android:layout_width="fill_parent"
+            android:layout_height="@+dimen/setting_item_height"
+            android:layout_below="@+id/score"
+            android:layout_marginTop="2.0dip"
+            android:background="@+drawable/setting_list_bg_drawable" >
+
+            <ImageView
+                android:id="@+id/about_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@+dimen/setting_item_magin_left"
+                android:src="@+drawable/settings_about" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@+dimen/setting_text_magin_left"
+                android:layout_toRightOf="@+id/about_image"
+                android:text="@+string/about_us"
+                android:textAppearance="@+style/base_setting_style" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/recommend"
+        android:layout_width="fill_parent"
+        android:layout_height="@+dimen/setting_item_height"
+        android:layout_below="@+id/two"
+        android:layout_marginLeft="@+dimen/setting_item_padding"
+        android:layout_marginRight="@+dimen/setting_item_padding"
+        android:layout_marginTop="20.0dip"
+        android:background="@+drawable/setting_list_bg_drawable" >
+
+        <ImageView
+            android:id="@+id/recommend_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@+dimen/setting_item_magin_left"
+            android:src="@+drawable/settings_recomment" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@+dimen/setting_text_magin_left"
+            android:layout_toRightOf="@+id/recommend_image"
+            android:text="@+string/recommend"
+            android:textAppearance="@+style/base_setting_style" />
+    </RelativeLayout>
+
+</RelativeLayout>

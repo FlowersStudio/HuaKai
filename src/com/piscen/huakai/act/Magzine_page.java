@@ -2,6 +2,7 @@ package com.piscen.huakai.act;
 
 import com.piscen.huakai.R;
 import com.piscen.huakai.common.AsyncImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -113,5 +114,12 @@ public class Magzine_page extends Fragment {
             }  
         });  
 	}
-   
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("MainScreen"); //统计页面
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("MainScreen"); 
+    }
 }

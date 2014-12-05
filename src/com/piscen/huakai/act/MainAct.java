@@ -26,6 +26,7 @@ import com.piscen.huakai.http.JsonUtil;
 import com.piscen.huakai.listen.ImagePageChangeListener;
 import com.piscen.huakai.view.MyGridView;
 import com.piscen.huakai.view.SlideImageLayout;
+import com.umeng.analytics.MobclickAgent;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -203,5 +204,12 @@ public class MainAct extends Fragment{
 			}
 		}
 	};
-
+	public void onResume() {
+	    super.onResume();
+	    MobclickAgent.onPageStart("MainScreen"); //统计页面
+	}
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPageEnd("MainScreen"); 
+	}
 }

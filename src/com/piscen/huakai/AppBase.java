@@ -60,7 +60,7 @@ public class AppBase extends Application {
 	 * 待处理工单轮询时间（秒）
 	 */
 	public static final int ORDER_POLL_TIME = 600;// 3 * 60;
-	
+
 	/**
 	 * 初始化各全局变量
 	 */
@@ -71,7 +71,6 @@ public class AppBase extends Application {
 		setPackName(getPackageName());
 		instance = this;
 	}
-
 
 	public static Context getInstance() {
 		return instance;
@@ -188,11 +187,11 @@ public class AppBase extends Application {
 	/**
 	 * 退出应用
 	 */
-	 public static  void exit() {
-       for(int i=activityList.size()-1;i>0;i--){
-           activityList.get(i).finish();
-       }
-       System.exit(0);    
-   }
+	public static  void exit() {
+		for(int i=activityList.size()-1;i>0;i--){
+			activityList.get(i).finish();
+		}
+		System.exit(0);    
+	}
 
 }
